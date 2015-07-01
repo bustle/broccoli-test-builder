@@ -1,0 +1,32 @@
+{
+  "name": "broccoli-test-builder",
+  "version": "0.1.0",
+  "description": "build a conventional test tree",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/201-created/broccoli-test-builder.git"
+  },
+  "keywords": [
+    "broccoli-plugin"
+  ],
+  "author": "Cory Forsyth <cory.forsyth@gmail.com> (http://coryforsyth.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/201-created/broccoli-test-builder/issues"
+  },
+  "homepage": "https://github.com/201-created/broccoli-test-builder",
+  "dependencies": {
+    "broccoli-amd-loader": "^0.1.0",
+    "broccoli-babel-transpiler": "^5.2.3",
+    "broccoli-concat": "0.0.13",
+    "broccoli-funnel": "^0.2.3",
+    "broccoli-jshint": "^0.5.6",
+    "broccoli-merge-trees": "^0.2.1",
+    "lodash": "^3.10.0",
+    "qunitjs": "^1.18.0"
+  }
+}

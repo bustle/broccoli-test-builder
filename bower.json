@@ -1,0 +1,17 @@
+{
+  "name": "broccoli-test-builder",
+  "main": "index.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/201-created/broccoli-test-builder",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ember-cli-test-loader": "~0.1.3"
+  }
+}
