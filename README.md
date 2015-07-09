@@ -12,9 +12,9 @@ Includes an amd loader, qunit.js, qunit.css, and a test-loader. Bring your own `
 
 Assumes:
 
-  * source code is in `/src`
+  * source code is in `lib/` (if not, specify a different path with `options.libDirName`)
   * source code is in es6 format, suitable for transpiling with babel
-  * test code is in `/tests`
+  * test code is in `tests/`
   * an `index.html` exists in `tests/`
 
 Usage:
@@ -22,6 +22,9 @@ Usage:
 ```
 var testBuilder = require('broccoli-test-builder');
 
+var options = {
+  libDirName: 'path-to-your-lib-dir', // default: 'lib'
+};
 var testTree = testBuilder.build();
 
 /*
@@ -39,31 +42,30 @@ var testTree = testBuilder.build();
 */
 ```
 
-This is intended to be used with a test `index.html` that looks like:
+This is intended to be used with a test `index.html` that looks like the following.
+The capitalized variable markers will be replaced with the correct output.
 ```
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My Tests</title>
-  <link rel="stylesheet" href="./qunit/qunit.css">
+  <title>YOUR TEST TITLE</title>
+
+  @@QUNIT_CSS
 </head>
 <body>
-  <div id="qunit"></div>
-  <div id="qunit-fixture"></div>
-  
-  <script src="./qunit/qunit.js"></script>
-  <script src="/testem.js"></script>
-  <script src="./loader.js/loader.js"></script>
 
-  <script src="../amd/content-kit-utils.js"></script>
-  <script src="./built-amd-tests.js"></script>
-  <script src="./test-loader/test-loader.js"></script>
-  <script>
-    var TestLoader = require('ember-cli/test-loader')['default'];
-    var testLoader = new TestLoader();
-    testLoader.loadModules();
-  </script>
+  @@QUNIT_DOM
+
+  @@QUNIT_JS
+
+  <script src="/testem.js"></script>
+
+  @@LOADER_JS
+  <script src="../amd/YOUR-BUILT-AMD-CODE.js"></script>
+
+  @@AMD_TEST_JS
+  @@TEST_LOADER_JS
 </body>
 </html>
 ```

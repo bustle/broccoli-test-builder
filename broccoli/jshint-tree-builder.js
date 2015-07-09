@@ -5,8 +5,8 @@ var concat = require('broccoli-concat');
 var merge = require('broccoli-merge-trees');
 //var stew = require('broccoli-stew');
 
-function buildJSHint() {
-  var tree = merge([funnel('./src', {
+function buildJSHint(libDirName) {
+  var tree = merge([funnel(libDirName, {
     include: ['**/*.js'],
     destDir: '/tests/jshint'
   }), funnel('./tests', {

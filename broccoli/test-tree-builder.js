@@ -4,6 +4,7 @@ var concat = require('broccoli-concat');
 var merge = require('broccoli-merge-trees');
 var jsHintBuilder = require('./jshint-tree-builder');
 var amdLoader = require('broccoli-amd-loader');
+var testIndexBuilder = require('./test-index');
 
 var path = require('path');
 
@@ -27,7 +28,11 @@ function emberCLITestLoaderTree() {
   });
 }
 
-function buildTestTree() {
+function buildTestTree(options) {
+  if (!options) { options = {}; }
+
+  var libDirName = options.libDirName || 'lib';
+
   var testJSTree = funnel('./tests', {
     include: ['**/*.js'],
     destDir: '/tests'
@@ -38,7 +43,7 @@ function buildTestTree() {
     modules: 'amdStrict'
   });
 
-  testJSTree = merge([testJSTree, jsHintBuilder.build()]);
+  testJSTree = merge([testJSTree, jsHintBuilder.build(libDirName)]);
 
   testJSTree = concat(testJSTree, {
     inputFiles: ['**/*.js'],
@@ -50,10 +55,7 @@ function buildTestTree() {
     emberCLITestLoaderTree()
   ]);
 
-  var testHTMLTree = funnel('./tests', {
-    include: ['index.html'],
-    destDir: '/tests'
-  });
+  var testHTMLTree = testIndexBuilder.build('/tests');
 
   var testTree = merge([
     testJSTree,
