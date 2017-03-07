@@ -1,21 +1,23 @@
 /* jshint node:true */
-var jshint = require('broccoli-jshint');
-var funnel = require('broccoli-funnel');
-var concat = require('broccoli-concat');
-var merge = require('broccoli-merge-trees');
-//var stew = require('broccoli-stew');
+var JSHinter = require('broccoli-jshint');
+var Funnel = require('broccoli-funnel');
+var Concat = require('broccoli-concat');
+var Merge = require('broccoli-merge-trees');
 
 function buildJSHint(libDirName) {
-  var tree = merge([funnel(libDirName, {
+  var tree = new Merge([new Funnel(libDirName, {
     include: ['**/*.js'],
     destDir: '/tests/jshint'
-  }), funnel('./tests', {
+  }), new Funnel('./tests', {
     include: ['**/*.js'],
     destDir: '/tests/jshint'
   })]);
 
-  tree = jshint(tree);
-  tree = concat(tree, {
+  tree = new JSHinter(tree, {
+    jshintrcPath: 'tests/.jshintrc',
+    log: true
+  });
+  tree = new Concat(tree, {
     inputFiles: ['tests/jshint/**/*.js'],
     outputFile: '/tests/jshint-test.js'
   });

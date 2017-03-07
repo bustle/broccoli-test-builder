@@ -1,5 +1,5 @@
-var funnel = require('broccoli-funnel');
-var replace = require('broccoli-replace');
+var Funnel = require('broccoli-funnel');
+var Replace = require('broccoli-replace');
 
 var patterns = [
   {
@@ -33,12 +33,12 @@ module.exports = {
   build: function(destDir) {
     if (!destDir) { destDir = '/tests'; }
 
-    var tree = replace('./tests', {
+    var tree = new Replace('./tests', {
       files: ['index.html'],
       patterns: patterns
     });
 
-    tree = funnel(tree, {
+    tree = new Funnel(tree, {
       include: ['index.html'],
       destDir: destDir
     });

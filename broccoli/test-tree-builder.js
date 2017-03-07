@@ -1,7 +1,7 @@
-var funnel = require('broccoli-funnel');
-var es6 = require('broccoli-babel-transpiler');
-var concat = require('broccoli-concat');
-var merge = require('broccoli-merge-trees');
+var Funnel = require('broccoli-funnel');
+var ES6 = require('broccoli-babel-transpiler');
+var Concat = require('broccoli-concat');
+var Merge = require('broccoli-merge-trees');
 var jsHintBuilder = require('./jshint-tree-builder');
 var amdLoader = require('broccoli-amd-loader');
 var testIndexBuilder = require('./test-index');
@@ -11,7 +11,7 @@ var path = require('path');
 function qunitTree() {
   var qunitDir = path.dirname(require.resolve('qunitjs'));
 
-  return funnel(qunitDir, {
+  return new Funnel(qunitDir, {
     include: [
       'qunit.js',
       'qunit.css',
@@ -22,7 +22,7 @@ function qunitTree() {
 
 function emberCLITestLoaderTree() {
   var testLoaderPath = path.join(__dirname, '..', 'ext');
-  return funnel(testLoaderPath, {
+  return new Funnel(testLoaderPath, {
     include: [ 'test-loader.js' ],
     destDir: '/tests/test-loader/'
   });
@@ -33,31 +33,31 @@ function buildTestTree(options) {
 
   var libDirName = options.libDirName || 'lib';
 
-  var testJSTree = funnel('./tests', {
+  var testJSTree = new Funnel('./tests', {
     include: ['**/*.js'],
     destDir: '/tests'
   });
 
-  testJSTree = es6(testJSTree, {
+  testJSTree = new ES6(testJSTree, {
     moduleIds: true,
     modules: 'amdStrict'
   });
 
-  testJSTree = merge([testJSTree, jsHintBuilder.build(libDirName)]);
+  testJSTree = new Merge([testJSTree, jsHintBuilder.build(libDirName)]);
 
-  testJSTree = concat(testJSTree, {
+  testJSTree = new Concat(testJSTree, {
     inputFiles: ['**/*.js'],
     outputFile: '/tests/built-amd-tests.js'
   });
 
-  var testExtTree = merge([
+  var testExtTree = new Merge([
     qunitTree(),
     emberCLITestLoaderTree()
   ]);
 
   var testHTMLTree = testIndexBuilder.build('/tests');
 
-  var testTree = merge([
+  var testTree = new Merge([
     testJSTree,
     testExtTree,
     testHTMLTree
