@@ -1,6 +1,6 @@
 {
   "name": "broccoli-test-builder",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "build a conventional test tree",
   "main": "index.js",
   "scripts": {
