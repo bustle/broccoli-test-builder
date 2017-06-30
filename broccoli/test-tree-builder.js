@@ -2,9 +2,9 @@ var Funnel = require('broccoli-funnel');
 var ES6 = require('broccoli-babel-transpiler');
 var Concat = require('broccoli-concat');
 var Merge = require('broccoli-merge-trees');
-var jsHintBuilder = require('./jshint-tree-builder');
 var amdLoader = require('broccoli-amd-loader');
 var testIndexBuilder = require('./test-index');
+var esLintBuilder = require('./eslint-tree-builder');
 
 var path = require('path');
 
@@ -43,7 +43,7 @@ function buildTestTree(options) {
     modules: 'amdStrict'
   });
 
-  testJSTree = new Merge([testJSTree, jsHintBuilder.build(libDirName)]);
+  testJSTree = new Merge([testJSTree, esLintBuilder.build(libDirName)]);
 
   testJSTree = new Concat(testJSTree, {
     inputFiles: ['**/*.js'],
