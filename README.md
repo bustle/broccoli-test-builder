@@ -2,7 +2,7 @@
 
 A broccoli plugin to build a tree that includes everything necessary to run tests.
 
-Uses broccoli-jshint to run jshint over the src code and test code.
+Uses broccoli-lint-eslint to run jshint over the src code and test code.
 
 Builds test files into amd modules and concats them into `tests/built-amd-tests.js`
 
